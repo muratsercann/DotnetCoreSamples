@@ -45,7 +45,7 @@ namespace JWTAuthentication
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseAuthentication();
         }
     }

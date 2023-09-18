@@ -6,6 +6,8 @@ using System.Linq;
 
 namespace JWTAuthentication.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ValuesController : Controller
     {
         // GET api/values
