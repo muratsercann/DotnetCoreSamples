@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+using System.Security.Cryptography;
 
 namespace JWTAuthentication.Controllers
 {
@@ -64,7 +65,7 @@ namespace JWTAuthentication.Controllers
 
             //Validate the User Credentials
             //Demo Purpose, I have Passed HardCoded User Information
-            if (login.Username == "Jignesh")
+            if (login.Username == "msercan")
             {
                 user = new UserModel { Username = "Jignesh Trivedi", EmailAddress = "test.btest@gmail.com", DateOfJoing = new DateTime(2010, 08, 02) };
             }
