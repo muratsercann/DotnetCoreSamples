@@ -1,0 +1,7 @@
+﻿https://codepedia.info/jwt-authentication-in-aspnet-core-web-api-token 
+
+https://github.com/shahedbd/API.UserManagement
+
+https://shahedbd.medium.com/net-7-web-api-jwt-authentication-and-role-based-authorization-f2ff81f69cd4
+
+https://jasonwatmore.com/net-7-csharp-jwt-authentication-tutorial-without-aspnet-core-identity
