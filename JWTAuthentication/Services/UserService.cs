@@ -61,18 +61,20 @@ namespace JWTAuthentication.Services
 
         private string GenerateJSONWebToken(User userInfo, IConfiguration config)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]));
+            var bytes = Encoding.UTF8.GetBytes(config["JWTKey:Secret"]);
+            var securityKey = new SymmetricSecurityKey(bytes);
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, userInfo.Username),
                 new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
-                //new Claim("DateOfJoining", userInfo.DateOfJoining.ToString("yyyy-MM-dd")),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("UserName", userInfo.Username),
+                new Claim("UserRole", "user")
             };
 
-            var token = new JwtSecurityToken(config["Jwt:Issuer"],
-                config["Jwt:Issuer"],
+            var token = new JwtSecurityToken(config["JWTKey:ValidIssuer"],
+                config["JWTKey:ValidIssuer"],
                 claims,
                 expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: credentials);
