@@ -17,7 +17,7 @@ namespace JWTAuthentication.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller
-    {
+    {        
         private IConfiguration _config;
         private readonly IUserService _userService;
 
@@ -57,27 +57,6 @@ namespace JWTAuthentication.Controllers
             {
                 return BadRequest(new { ErrorMessage = e.Message });
             }
-        }
-
-        private string GenerateJSONWebToken(User userInfo)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTKey:Secret"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.Username),
-                new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
-                //new Claim("DateOfJoining", userInfo.DateOfJoining.ToString("yyyy-MM-dd")),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = new JwtSecurityToken(_config["JWTKey:ValidIssuer"],
-                _config["JWTKey:ValidIssuer"],
-                claims,
-                expires: DateTime.Now.AddMinutes(120),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
     }
