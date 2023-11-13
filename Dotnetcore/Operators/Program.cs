@@ -1,24 +1,17 @@
-﻿using System.Collections.Generic;
-using System;
-
+﻿
 namespace Dotnetcore
 {
     internal class Program
     {
-        private static void Main()
+        private static void Main(string[] args)
         {
-            Person Sam = new Person();
-            Sam.Name = "Sam";
-            // Sam.Children.Add(new Person() { Name = "J.S1" });
-            // Sam.Children.Add(new Person() { Name = "J.S2" });
-            // Sam.Children.Add(new Person() { Name = "J.S3" });
+            Console.WriteLine("Hello, World!");
+            Person p1 = new Person() { Name = "p1" };
+            Person p2 = new Person() { Name = "p2" };
 
-            Person child = new Person() { Name = "c1" };
-            Sam.Children.Add(child);
+            Person p3 = p1 * p2;
 
-            Sam.Children[0].Name = "new c1";
-            Console.WriteLine(child.Name);
-
+            Console.WriteLine(p3.Name);
         }
     }
 
@@ -31,6 +24,11 @@ namespace Dotnetcore
         public Person()
         {
 
+        }
+
+        public static Person operator *(Person p1, Person p2)
+        {
+            return Person.Procreate(p1, p2);
         }
 
         public Person this[int index]
@@ -51,6 +49,10 @@ namespace Dotnetcore
             Console.WriteLine("Deconstructor");
         }
 
-    }
+        public static Person Procreate(Person p1, Person p2)
+        {
+            return new Person() { Name = "Child of " + p1.Name + " and " + p2.Name };
+        }
 
+    }
 }
