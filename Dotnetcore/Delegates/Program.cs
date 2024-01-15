@@ -1,7 +1,4 @@
-﻿
-
-using System.Security.Cryptography;
-namespace Dornetcore
+﻿namespace Dotnetcore
 {
     internal class Program
     {

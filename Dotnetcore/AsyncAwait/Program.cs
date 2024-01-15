@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 internal class Program
 {
-    private static void Main()
+    private static async Task Main()
     {
         for (int i = 1; i <= 15; i++)
         {
-            MyFunction(i);
+            await MyFunction(i);
         }
 
         Console.ReadLine();

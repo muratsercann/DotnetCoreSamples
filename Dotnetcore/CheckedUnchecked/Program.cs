@@ -1,4 +1,5 @@
-﻿internal class Program
+﻿
+internal class Program
 {
     private static void Main(string[] args)
     {
@@ -15,12 +16,18 @@
 
         // checked
         // {
-        //     int a = int.MaxValue;
-        //     a++;
-        //     Console.WriteLine("a : " + a);
-
-        //     //Hata : Unhandled exception. 
-        //     //System.OverflowException: Arithmetic operation resulted in an overflow.
+        //      int b = int.MaxValue + 1;    //compile time error : 
+        //
+        //      Error CS0220  The operation overflows at compile time in 
+        //      checked mode CheckedUnchecked    D:\Projects 2023\Dotnetcore\Dotnetcore\CheckedUnchecked\Program.cs  8   Active
+        //
+        //      int a = int.MaxValue;         
+        //      a++;
+        //      Console.WriteLine("a : " + a);
+        //     
+        //      //Runtime Error :
+        //      //Error : Unhandled exception. 
+        //      //System.OverflowException: Arithmetic operation resulted in an overflow.
         // }
     }
 }
