@@ -1,4 +1,4 @@
-﻿..using System;
+﻿using System;
 
 class GenericClass<T1, T2>
 {
@@ -43,7 +43,7 @@ internal class Program
         // var a = new GenericClass<int, string>(3, "Nerdesin ?");
         // a.Write();
 
-        var b = GenericClass.Create("Seleam", 4568);
+        var b = GenericClass.Create("Hello :)", 4568);
         b.Write();
 
         // myGenericMethod("sadsa", 2.3f);

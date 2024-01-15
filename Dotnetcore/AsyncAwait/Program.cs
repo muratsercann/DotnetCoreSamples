@@ -11,11 +11,12 @@ internal class Program
             MyFunction(i);
         }
 
+        Console.ReadLine();
+
     }
 
     private static async Task MyFunction(int num)
     {
-        uint iterationCount = 10;
         if (num % 3 == 0)
         {
             await Task.Delay(500);
