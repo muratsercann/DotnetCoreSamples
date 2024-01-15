@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependecyInjection", "Depen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{8F4B22DC-DF0A-4EE7-AE28-49B503E32368}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovarianceVsContravariance", "CovarianceVsContravariance\CovarianceVsContravariance.csproj", "{6215382B-8A5C-4273-AEB3-04BE26BCB172}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{8F4B22DC-DF0A-4EE7-AE28-49B503E32368}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F4B22DC-DF0A-4EE7-AE28-49B503E32368}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F4B22DC-DF0A-4EE7-AE28-49B503E32368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6215382B-8A5C-4273-AEB3-04BE26BCB172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6215382B-8A5C-4273-AEB3-04BE26BCB172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6215382B-8A5C-4273-AEB3-04BE26BCB172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6215382B-8A5C-4273-AEB3-04BE26BCB172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
