@@ -1,69 +1,65 @@
 ﻿
 internal class Program
 {
-    delegate void MyAction(Base b);
-    delegate void MyGenericAction<in T>(T b);
+    delegate void ContravariantDelegate<in T>(T b);
 
     private static void Main(string[] args)
     {
-        #region !! Important
-
-        CovarianceVsContravariance.Delegates.Run();
-
-        IEnumerable<Derived> aaa = new List<Derived>();
-        IEnumerable<Base> bbb = aaa;
-
-        Action<Base> ccc = (target) => { Console.WriteLine(target.GetType().Name); };
-        Action<Derived> ddd = ccc;
-        ddd(new Derived());
-
-        #endregion
-
-        #region Basics
+        //1. Instances of the Base and Derived classes
         Base x = new Base();
         Base y = new Derived();
         Derived z = new Derived();
-        //z = new Base();//compile error
 
+        //2. Covariant Interface : IProducer<out T>
         IProducer<Base> prodOfBase = new Producer<Base>();
-        Base a = prodOfBase.Create();
-        //Derived b = prodOfBase.Create();// compile error
-
+        IProducer<Base> prodOfBase2 = new Producer<Derived>();
         IProducer<Derived> prodOfDerived = new Producer<Derived>();
-        Derived b = prodOfDerived.Create();
-        Base c = prodOfDerived.Create();
 
+        //3. Contravariant Interface : IConsumer<in T>
         IConsumer<Base> consOfBase = new Consumer<Base>();
-        consOfBase.Consume(new Base());
-        consOfBase.Consume(new Derived());
-
         IConsumer<Derived> consOfDerived = new Consumer<Derived>();
-        consOfDerived.Consume(new Derived());
-        //consOfDerived.Consume(new Base()); //Compile Error
 
-        ///////////////////////////////////////////////////////////////////
-
+        //4.Covariant vs Contravariant
         IProducer<Base> p = prodOfBase;         // IProducer<Base>
         IProducer<Base> q = prodOfDerived;      // IProducer<Derived>
         IProducer<Derived> r = prodOfDerived;   // IProducer<Derived>
-        //IProducer<Derived> r = prodOfBase;    // IProducer<Base> Error!!!!
 
         IConsumer<Derived> t = consOfDerived;   //IConsumer<Derived>
-        //beacuse we write IConsumer<in target> , - IConsumer<Derived> u = consOfBase; - works
+        IConsumer<Derived> u = consOfBase;      // ÖNEMLİ !!!
 
-        IConsumer<Derived> u = consOfBase;  // ÖNEMLİ !!!
+        //5.Covariant IEnumerable and Action<in T>
+        IEnumerable<Derived> a = new List<Derived>();
+        IEnumerable<Base> b = a;
 
-        Console.WriteLine("\n\nIConsumer<Derived> u = consOfBase;");
-        Console.Write($"u.Consume(new Base()); : Error: ");
-        //u.Consume(new Base()); // ! Error !
-        Console.Write($"consOfBase.Consume(new Derived()); : ");
-        u.Consume(new Derived());
+        Action<Base> actionBase = null;
+        Action<Derived> actionDerived = actionBase;
 
-        IConsumer<Base> v = consOfBase;         //IConsumer<Base>
-                                                //IConsumer<Base> w = consOfDerived;    //IConsumer<Derived>   
-
-        #endregion
+        //6. Contravariant Delegate
+        ContravariantDelegate<Derived> cDerived = ContravariantMethod<Base>;//delegate contravariant değilken de çalışır.
+        ContravariantDelegate<Base> cBase = ContravariantMethod<Base>;
+        cDerived = cBase;//delegate contravariant değilse hata verir.
     }
+
+    public static void ContravariantMethod<T>(T input)
+    {
+        Console.WriteLine($"{input.GetType()} is being consumed !");
+    }
+}
+
+public class Base { }
+
+public class Derived : Base { }
+
+//Covaraiance
+public interface IProducer<out T>
+{
+    T Create();
+}
+
+//Contravariance
+public interface IConsumer<in T>
+{
+    void Consume(T input);
 }
 
 class Producer<T> : IProducer<T>
@@ -82,16 +78,3 @@ class Consumer<T> : IConsumer<T>
     }
 }
 
-public interface IProducer<out T>
-{
-    T Create();
-}
-
-public interface IConsumer<in T>
-{
-    void Consume(T input);
-}
-
-public class Base { }
-
-public class Derived : Base { }
