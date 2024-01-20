@@ -1,58 +1,63 @@
 ﻿using System;
 
-public class Program
+namespace Program
 {
-    public static void Main()
+    public class Program
     {
-        Factory[] factories = new Factory[2];
-
-        factories[0] = new Factory_A();
-        factories[1] = new Factory_B();
-
-
-        foreach (var factory in factories)
+        public static void Main()
         {
-            Product product = factory.Create();
+            FactoryMethod.Program2.Main2();
 
-            Console.WriteLine("product type: " + product.GetType().ToString());
+            Factory[] factories = new Factory[2];
+
+            factories[0] = new Factory_A();
+            factories[1] = new Factory_B();
+
+
+            foreach (var factory in factories)
+            {
+                Product product = factory.Create();
+
+                Console.WriteLine("product type: " + product.GetType().ToString());
+
+            }
 
         }
+    }
+
+    public abstract class Product
+    {
 
     }
-}
 
-public abstract class Product
-{
-
-}
-
-public abstract class Factory
-{
-    public abstract Product Create();
-}
-
-public class Product_A : Product
-{
-
-}
-
-public class Product_B : Product
-{
-
-}
-
-public class Factory_A : Factory
-{
-    public override Product Create()
+    public abstract class Factory
     {
-        return new Product_A();
+        public abstract Product Create();
     }
-}
 
-public class Factory_B : Factory
-{
-    public override Product Create()
+    public class Product_A : Product
     {
-        return new Product_B();
+
+    }
+
+    public class Product_B : Product
+    {
+
+    }
+
+    public class Factory_A : Factory
+    {
+        public override Product Create()
+        {
+            return new Product_A();
+        }
+    }
+
+    public class Factory_B : Factory
+    {
+        public override Product Create()
+        {
+            return new Product_B();
+        }
     }
 }
