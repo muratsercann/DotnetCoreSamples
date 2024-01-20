@@ -8,7 +8,7 @@
 /// </summary>
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main (string[] args)
     {
         Type stringType = typeof(string);//Tür adı (string,object, int gibi) kullanılır 
 
@@ -38,6 +38,8 @@ internal class Program
         CustomType sample = new CustomType(42);
         int intValue = (int)sample;
 
+        //custom implicit
+        long x = sample;
     }
 }
 
@@ -51,8 +53,6 @@ public class CustomType
     }
 
     // explicit dönüşüm operatörü tanımlanıyor
-    public static explicit operator int(CustomType sample)
-    {
-        return sample.Value;
-    }
+    public static explicit operator int(CustomType sample) => sample.Value;
+    public static implicit operator long(CustomType sample) => sample.Value;
 }

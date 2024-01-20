@@ -16,7 +16,7 @@ public abstract class Shape
     public abstract decimal calcArea();
     public Shape()
     {
-        Console.WriteLine("Constructor of Shape : ");
+        Console.WriteLine("Shape constructor says : ");
     }
 
     public virtual string name()

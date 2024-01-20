@@ -71,9 +71,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Insertion", "Insertion", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickSort", "QuickSort\QuickSort.csproj", "{76C69458-0031-4D74-8841-B8E2A91FF97A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Casting", "Casting\Casting.csproj", "{F86869D0-7269-4F81-B0A8-5198BC6A4D83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Casting", "Casting\Casting.csproj", "{F86869D0-7269-4F81-B0A8-5198BC6A4D83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryCatch", "TryCatch\TryCatch.csproj", "{C59089DE-A36B-42E0-A59F-E480FACFB9FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryCatch", "TryCatch\TryCatch.csproj", "{C59089DE-A36B-42E0-A59F-E480FACFB9FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractFactory", "DesignPatterns\Abstract Factory\AbstractFactory.csproj", "{31D203F8-9531-484E-9070-A2699A254229}"
 EndProject
@@ -82,6 +82,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facade", "DesignPatterns\Facade\Facade.csproj", "{24C19D30-CBBC-4F55-BE02-BC4A8956A4D2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactoryMethod", "DesignPatterns\Factory Method\FactoryMethod.csproj", "{4C6AA907-4EC0-4D07-87A0-A33EA754F5DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperatorOverloading", "OperatorOverloading\OperatorOverloading.csproj", "{8426A61B-7B1B-4B25-9FBE-FDE6B1E95A8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,6 +179,10 @@ Global
 		{4C6AA907-4EC0-4D07-87A0-A33EA754F5DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C6AA907-4EC0-4D07-87A0-A33EA754F5DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C6AA907-4EC0-4D07-87A0-A33EA754F5DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8426A61B-7B1B-4B25-9FBE-FDE6B1E95A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8426A61B-7B1B-4B25-9FBE-FDE6B1E95A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8426A61B-7B1B-4B25-9FBE-FDE6B1E95A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8426A61B-7B1B-4B25-9FBE-FDE6B1E95A8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
