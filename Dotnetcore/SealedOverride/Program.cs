@@ -12,7 +12,7 @@
 
         Console.WriteLine("\n<Derived3>.DoWork output :");
         Derived3 s3 = new Derived3();
-        s3.DoWork();//calls the method in Derived2
+        s3.DoWork();//calls the method in Derived3
 
         //Burda sub2 içerisindeki DoWork çalışır
         //Çünkü Derived3'ün DoWork'u override eden kendine en yakın atası Derived2'dir.
@@ -64,3 +64,20 @@ public class Derived3 : Derived2
         Console.WriteLine($"DoWork in class Derived3 with 'new' keyword");
     }
 }
+/*
+Output :
+
+(Base)(<Derived1>).DoWork output :
+DoWork in class Derived1
+
+<Derived2>.DoWork output :
+DoWork in class Derived2
+
+<Derived3>.DoWork output :
+DoWork in class Derived3 with 'new' keyword
+
+(Base)(<Derived3>).DoWork output :
+DoWork in class Derived2
+
+
+*/
