@@ -31,7 +31,9 @@ namespace Dotnetcore
     }
     public class D : C
     {
-        public sealed override void DoWork()//Burada sealed kullandığımız için. Artık D sınıfını miras alan sınıf bu metodu override edemez.
+        //Burada sealed kullandığımız için. Artık D sınıfını miras alan sınıf bu metodu override edemez.
+        //Aynı metoddan oluşturmak isterse "new" anahtar kelimesini kullanabilir 
+        public sealed override void DoWork()
         {
             Console.WriteLine("Do work for class D");
         }
@@ -43,6 +45,12 @@ namespace Dotnetcore
         // {
         //     Console.WriteLine("Do work for class E");
         // }
+
+        //new ile oluşturduğumuz bu metod kalıtıma dahil edilmez
+        public new void DoWork()
+        {
+            Console.WriteLine("Do work for class E ('new' keyword)");
+        }
     }
 
 }
