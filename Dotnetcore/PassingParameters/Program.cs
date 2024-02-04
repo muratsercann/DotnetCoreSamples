@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Text;
 
-namespace Dotnetcore // Note: actual namespace depends on the project name.
+namespace Dotnetcore 
 {
     internal class Program
     {
@@ -13,6 +14,24 @@ namespace Dotnetcore // Note: actual namespace depends on the project name.
             y++;
             //z++; //compiler error. because you use "in" keyword before "int z"
         }
+
+        /// <summary>
+        ///  İçerisine aldığı sayıları formatlı bir şekilde konsola yazar
+        /// </summary>
+        /// <param name="numers"></param>
+        static void writeNumbers(params int[] numers)
+        {
+            //params parametreleri içerisine istenilen sayıda değer almak için kullanılır.
+            StringBuilder sb = new StringBuilder();
+            sb.Append("numbers : ");
+            foreach (var item in numers)
+            {
+                sb.Append($"{item},");
+            }
+            sb.Remove(sb.Length - 1, 1);
+            Console.WriteLine(sb.ToString());
+        }
+
         static void Main(string[] args)
         {
             int a = 10;
@@ -25,6 +44,9 @@ namespace Dotnetcore // Note: actual namespace depends on the project name.
             Console.WriteLine($"b : {b}");
             Console.WriteLine($"c : {c}");
 
+            //params
+            writeNumbers(1,2);
+            writeNumbers(3,4,5,6,7,8,9,10);
         }
     }
 
