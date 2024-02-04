@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
-namespace EFCoreBasics
+namespace EFCore.Basics.LazyLoading
 {
     public class BloggingContext : DbContext
     {
@@ -13,15 +12,15 @@ namespace EFCoreBasics
 
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {           
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
             var connectionString = configuration.GetConnectionString("Default");
             optionsBuilder
-                .UseLazyLoadingProxies().UseSqlServer(connectionString);
+                .UseSqlServer(connectionString);
 
             Console.WriteLine("---------");
             Console.WriteLine($"Connection String : {connectionString}");
