@@ -18,13 +18,14 @@ internal class Program
         //3. Contravariant Interface : IConsumer<in T>
         IConsumer<Base> consOfBase = new Consumer<Base>();
         IConsumer<Derived> consOfDerived = new Consumer<Derived>();
+        IConsumer<Derived> consOfDerived2 = new Consumer<Base>();//!!!!!!!!!
 
         //4.Covariant vs Contravariant
         IProducer<Base> p = prodOfBase;         // IProducer<Base>
         IProducer<Base> q = prodOfDerived;      // IProducer<Derived>
         IProducer<Derived> r = prodOfDerived;   // IProducer<Derived>
 
-        IConsumer<Derived> t = consOfDerived;   //IConsumer<Derived>
+        IConsumer<Derived> t = consOfDerived;   // IConsumer<Derived>
         IConsumer<Derived> u = consOfBase;      // ÖNEMLİ !!!
 
         //5.Covariant IEnumerable and Action<in T>
@@ -38,6 +39,7 @@ internal class Program
         ContravariantDelegate<Derived> cDerived = ContravariantMethod<Base>;//delegate contravariant değilken de çalışır.
         ContravariantDelegate<Base> cBase = ContravariantMethod<Base>;
         cDerived = cBase;//delegate contravariant değilse hata verir.
+
     }
 
     public static void ContravariantMethod<T>(T input)

@@ -14,14 +14,15 @@ namespace EFCoreBasics
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {           
+        {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
             var connectionString = configuration.GetConnectionString("Default");
             optionsBuilder
-                .UseLazyLoadingProxies().UseSqlServer(connectionString);
+                .UseSqlServer(connectionString);
+            //.UseLazyLoadingProxies()
 
             Console.WriteLine("---------");
             Console.WriteLine($"Connection String : {connectionString}");

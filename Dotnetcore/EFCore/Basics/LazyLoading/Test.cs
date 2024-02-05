@@ -4,7 +4,7 @@
     {
         public static void Run()
         {
-            using (BloggingContext context = new BloggingContext())
+            using (LazyContext context = new LazyContext())
             {
                 var blogs = context.Blogs.ToList();
                 var posts = blogs[0].Posts;//Load Posts from Db at here !

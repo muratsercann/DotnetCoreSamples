@@ -2,7 +2,7 @@
 
 namespace EFCore.Basics.LazyLoading
 {
-    public class Blog
+    public class LazyBlog
     {
         public int BlogId { get; set; }
 
@@ -10,18 +10,18 @@ namespace EFCore.Basics.LazyLoading
         public string Url { get; set; }
         public int Rating { get; set; }
 
-        private ICollection<Post> _posts;
-        public ICollection<Post> Posts
+        private ICollection<LazyPost> _posts;
+        public ICollection<LazyPost> Posts
         {
             get => LazyLoader.Load(this, ref _posts);
             set => _posts = value;
         }
 
-        public Blog()
+        public LazyBlog()
         {
         }
 
-        private Blog(ILazyLoader lazyLoader)
+        private LazyBlog(ILazyLoader lazyLoader)
         {
             LazyLoader = lazyLoader;
         }

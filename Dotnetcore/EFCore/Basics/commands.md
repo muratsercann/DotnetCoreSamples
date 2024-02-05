@@ -15,10 +15,13 @@
 Create a migration :
 
 	 Add-Migration InitialCreate
-	 
+	 or
+	 Add-Migration InitialCreate -Context EFCoreBasics.BloggingContext
+
 Remove the migration :
 
-	 Remove-Migration InitialCreate	 
+	  Remove-Migration
+	  
 	 
 Create or update database from migration :
 

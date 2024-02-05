@@ -26,10 +26,10 @@ namespace EFCoreBasics
                     Title = "My coding life 1",
                     Posts = new List<Post>
                     {
-                        new Post(){BlogId = 1,Content = "Post 11 content..", Title = "Post 11" },
-                        new Post(){BlogId = 1,Content = "Post 12 content..", Title = "Post 12" },
-                        new Post(){BlogId = 1,Content = "Post 13 content..", Title = "Post 13" },
-                        new Post(){BlogId = 1,Content = "Post 14 content..", Title = "Post 14" },
+                        new Post(){BlogId = 1,Content = "LazyPost 11 content..", Title = "LazyPost 11" },
+                        new Post(){BlogId = 1,Content = "LazyPost 12 content..", Title = "LazyPost 12" },
+                        new Post(){BlogId = 1,Content = "LazyPost 13 content..", Title = "LazyPost 13" },
+                        new Post(){BlogId = 1,Content = "LazyPost 14 content..", Title = "LazyPost 14" },
                     },
 
                 },
@@ -39,10 +39,10 @@ namespace EFCoreBasics
                     Title = "My coding life 2",
                     Posts = new List<Post>
                     {
-                        new Post(){BlogId = 2,Content = "Post 21 content..", Title = "Post 21" },
-                        new Post(){BlogId = 2,Content = "Post 22 content..", Title = "Post 22" },
-                        new Post(){BlogId = 2,Content = "Post 23 content..", Title = "Post 23" },
-                        new Post(){BlogId = 2,Content = "Post 24 content..", Title = "Post 24" },
+                        new Post(){BlogId = 2,Content = "LazyPost 21 content..", Title = "LazyPost 21" },
+                        new Post(){BlogId = 2,Content = "LazyPost 22 content..", Title = "LazyPost 22" },
+                        new Post(){BlogId = 2,Content = "LazyPost 23 content..", Title = "LazyPost 23" },
+                        new Post(){BlogId = 2,Content = "LazyPost 24 content..", Title = "LazyPost 24" },
                     },
 
                 }
@@ -63,6 +63,14 @@ namespace EFCoreBasics
             try
             {
                 //SeedData();
+
+                //IQueryable<Post> queryable = _dbContext.Set<Post>();
+                //var list2 = queryable.Skip(2).Take(3).ToList();
+                IEnumerable<Post> enumerable = _dbContext.Set<Post>().Where(post => post.PostId > 1);
+                var list = enumerable.Skip(2).Take(3).ToList();
+                var list3 = enumerable.Where(x => x.BlogId == 3).ToList();
+                var list4 = enumerable.AsQueryable().Where(x => x.BlogId == 3).ToList();
+                string str = _dbContext.Set<Post>().Skip(1).Take(3).ToQueryString();
 
                 //Lazy Loading
                 EFCore.Basics.LazyLoading.Test.Run();

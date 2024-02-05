@@ -2,12 +2,12 @@
 using Microsoft.Extensions.Configuration;
 namespace EFCore.Basics.LazyLoading
 {
-    public class BloggingContext : DbContext
+    public class LazyContext : DbContext
     {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<LazyBlog> Blogs { get; set; }
+        public DbSet<LazyPost> Posts { get; set; }
 
-        public BloggingContext()
+        public LazyContext()
         {
 
         }
