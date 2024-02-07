@@ -12,8 +12,9 @@
                 Age = 31
             };
             int age = (int)p;
-            UserDTO user = (UserDTO)p;
 
+            UserDTO userDTO = (UserDTO)p;
+            User user = (User)userDTO;
 
             Vektor v1 = new Vektor(1, 2);
             Vektor v2 = new Vektor(2, 7);

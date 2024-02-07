@@ -16,19 +16,22 @@ namespace OperatorOverloading
 
         public static explicit operator int(User p) => p.Age;
 
-        public static explicit operator UserDTO(User p) => new UserDTO
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Age = p.Age
-        };
+        public static explicit operator UserDTO(User p) =>
+            new UserDTO
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Age = p.Age
+            };
 
-        public static explicit operator User(UserDTO p)
-        {
-            //get user from db with user id and return.
-            var userFromDb = new User();
-            return userFromDb;
-        }
+        public static explicit operator User(UserDTO p) =>
+            new User
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Age = p.Age,
+            };
+
     }
 
     public class UserDTO
