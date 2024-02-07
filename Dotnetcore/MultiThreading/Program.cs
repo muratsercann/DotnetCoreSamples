@@ -1,10 +1,7 @@
 ﻿using MultiThreading;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 internal class Program
 {
@@ -56,9 +53,6 @@ internal class Program
 
     private static async Task Test_MultiThread()
     {
-        Task t = new Task(() => Console.WriteLine(""));
-
-
         Stopwatch w = new Stopwatch();
         w.Start();
         Console.WriteLine($"Multi Thread has started. Thread ID : {Thread.CurrentThread.ManagedThreadId}");
