@@ -1,4 +1,5 @@
-﻿internal class Program
+﻿using System.Reflection;
+internal class Program
 {
     private static void Main(string[] args)
     {
@@ -17,7 +18,7 @@
         Console.WriteLine($"int i1                  : {i1}");
         Console.WriteLine($"int i2                  : {i2}");
         Console.WriteLine($"i1 == i2                : {i1 == i2}");
-        Console.WriteLine($"i1.Equals(i2)           : {i1 == i2}");
+        Console.WriteLine($"i1.Equals(i2)           : {i1.Equals(i2)}");
         Console.WriteLine($"ReferenceEquals(i1,i2)  : {ReferenceEquals(i1, i2)}");
 
         Console.WriteLine("--------------------------------------");
@@ -61,5 +62,96 @@
         var c = Console.ReadLine();
         Console.WriteLine($"c.Equals(s1)          :{c.Equals(s1)}");
         Console.WriteLine($"ReferenceEquals(c,s1) :{ReferenceEquals(c, s1)} ");*/
+
+
+        Person p1 = new Person("aaa", "bbb");
+        Person p2 = new Person("aaa", "bbb");
+        var isEqual1 = p1.Equals(p2);
+
+        var hash1 = p1.GetHashCode();
+        var hash2 = p2.GetHashCode();
+
+        object p1Obj = p1;
+        object p2Obj = p2;
+        var isEqual11 = p1Obj.Equals(p2Obj);
+
+
+        Person_struct p3 = new Person_struct("aaa", "bbb");
+        Person_struct p4 = new Person_struct("aaa", "bbb");
+        var isEqual2 = p3.Equals(p4);
+
+
+        Person_record p5 = new Person_record("aaa", "bbb");
+        Person_record p6 = new Person_record("aaa", "bbb");
+        var isEqual3 = p5.Equals(p6);
+    }
+
+    class Person
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public Person(string firstName, string lastName) =>
+            (FirstName, LastName) = (firstName, lastName);
+
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is Person))
+                return false;
+
+            if (this == obj)
+                return true;
+
+            Person p = (Person)obj;
+            PropertyInfo[] props = typeof(Person).GetProperties();
+            var isEqual = true;
+            foreach (var item in props)
+            {
+                if (item.GetValue(this) != item.GetValue(p))
+                {
+                    isEqual = false;
+                    break;
+                }
+            }
+            return isEqual;
+        }
+
+        public bool Equals(Person obj)
+        {
+            PropertyInfo[] props = typeof(Person).GetProperties();
+            var isEqual = true;
+            foreach (var item in props)
+            {
+                if (item.GetValue(this) != item.GetValue(obj))
+                {
+                    isEqual = false;
+                    break;
+                }
+            }
+            return isEqual;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.FirstName, this.LastName);
+        }
+    }
+
+    record class Person_record
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public Person_record(string firstName, string lastName) =>
+            (FirstName, LastName) = (firstName, lastName);
+
+    }
+    struct Person_struct
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public Person_struct(string firstName, string lastName) =>
+            (FirstName, LastName) = (firstName, lastName);
     }
 }

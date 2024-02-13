@@ -71,7 +71,7 @@ namespace EFCoreBasics
                 var list3 = enumerable.Where(x => x.BlogId == 3).ToList();
                 var list4 = enumerable.AsQueryable().Where(x => x.BlogId == 3).ToList();
                 string str = _dbContext.Set<Post>().Skip(1).Take(3).ToQueryString();
-
+               
                 //Lazy Loading
                 EFCore.Basics.LazyLoading.Test.Run();
 
