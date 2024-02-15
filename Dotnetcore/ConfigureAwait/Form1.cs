@@ -20,9 +20,27 @@ namespace WinFormsApp1
         {
             listBox1.Items.Add("Starting call..");
             ReportThread("Before GetMessageAsync()");
-            var formattedMessage = await GetMessageAndFormat();
+
+            //Bundan sonraki senkron iþlemlerin uygulamayý bloklamasýný istemiyorsak ConfigureAwait(False) yapmamýz lazým.
+            var message = await RemoteServer.GetMessageAsync().ConfigureAwait(false);
+
             ReportThread("After GetMessageAsync()");
+
+            var formattedMessage = GetFormattedMessage(message);
+
+
             listBox1.Items.Add(formattedMessage);
+
+
+            /// ConfigureAwait(false) ifadesi :
+            /// Bundan sonra iþlemlere farklý context (farklý thread) üzerinden devam et.
+            /// Yani await kelimesinden sonraki satýrlarý
+            /// baþka bir thread üzerinden yürüt demek oluyor.
+            /// böylelikle uygulama donmuyor.
+            /// 
+            /// ConfigureAwait(true) ifadesi  :
+            /// Ayný context yani ayný thread üzerinden devam et demek oluyor
+
         }
 
         private void ReportThread(string message)
@@ -34,35 +52,41 @@ namespace WinFormsApp1
         private async Task<string> GetMessageAndFormat()
         {
             ReportThread("GetMessageAndFormat is getting response from remote server..");
-            var response = await MyLibrary.GetMessageAsync().ConfigureAwait(false);
+            var response = await RemoteServer.GetMessageAsync().ConfigureAwait(false);
             ReportThread("Please wait for the message formatting..");
             return GetFormattedMessage(response);
 
-            /// ConfigureAwait(false) ifadesi :
-            /// Bundan sonra farklý context üzerinden devam et.
-            /// Yani await kelimesinden sonraki satýrlarý
-            /// baþka bir thread üzerinden yürüt demek oluyor.
-
         }
+
 
         private string GetFormattedMessage(string message)
         {
+            ReportThread("Message came and Formatting started.");
+
             Thread.Sleep(3000);
+
             return $"(Thread {Thread.CurrentThread.ManagedThreadId}) Formatted Message : " + message;
         }
 
+        private async Task<string> GetFormattedMessageAsync(string message)
+        {
+            await Task.Delay(2000);
+            return $"(Thread {Thread.CurrentThread.ManagedThreadId}) Formatted Message : " + message;
+        }
         private void btnClean_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
         }
     }
 
-    public class MyLibrary()
+    public class RemoteServer
     {
         public static async Task<string> GetMessageAsync()
         {
-            await Task.Delay(3000);
-            return $"Hi :) (from Thread {Thread.CurrentThread.ManagedThreadId})";
+            await Task.Delay(2000);
+            return $"Hi :) (this message from remote server)";
         }
     }
+
 }
+
