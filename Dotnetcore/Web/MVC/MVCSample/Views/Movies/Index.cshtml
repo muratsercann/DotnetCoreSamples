@@ -12,15 +12,19 @@
 </p>
 
 <form asp-controller="Movies" asp-action="Index" method="get">
-    <p>
+    <label asp-for="MovieGenre">
+        @Html.DisplayNameFor(model => model.MovieGenre)
+    </label>
 
-        <select asp-for="MovieGenre" asp-items="Model.Genres">
-            <option value="">All</option>
-        </select>
+    <select asp-for="MovieGenre" asp-items="Model.Genres">
+        <option value="">All</option>
+    </select>
+    <label asp-for="SearchString">
+        @Html.DisplayNameFor(model => model.SearchString)
+    </label>
+    <input type="text" asp-for="SearchString" />
+    <input type="submit" disabled="@(false)" value="Filter" />
 
-        Title: <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Filter" />
-    </p>
 </form>
 
 
@@ -37,10 +41,10 @@
                 @Html.DisplayNameFor(model => model.Movies![0].Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Price)
+                @Html.DisplayNameFor(model => model.Movies![0].Rating)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Rating)
+                @Html.DisplayNameFor(model => model.Movies![0].Price)
             </th>
             <th></th>
         </tr>

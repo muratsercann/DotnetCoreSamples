@@ -14,15 +14,15 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 
-////Globalization
-//var defaultCulture = new CultureInfo("tr-TR");
-//var localizationOptions = new RequestLocalizationOptions
-//{
-//    DefaultRequestCulture = new RequestCulture(defaultCulture),
-//    SupportedCultures = new List<CultureInfo> { defaultCulture },
-//    SupportedUICultures = new List<CultureInfo> { defaultCulture }
-//};
-//app.UseRequestLocalization(localizationOptions);
+//Globalization
+var defaultCulture = new CultureInfo("tr-TR");
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(defaultCulture),
+    SupportedCultures = new List<CultureInfo> { defaultCulture },
+    SupportedUICultures = new List<CultureInfo> { defaultCulture }
+};
+app.UseRequestLocalization(localizationOptions);
 
 
 //Seed Data
