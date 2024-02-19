@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,49 +13,52 @@ namespace MVCSample.Controllers
 {
     public class MoviesController : Controller
     {
+
+        private readonly ILogger<MoviesController> _logger;
         private readonly MVCSampleContext _context;
 
-        public MoviesController(MVCSampleContext context)
+        public MoviesController(ILogger<MoviesController> logger, MVCSampleContext context)
         {
+            _logger = logger;
             _context = context;
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index(string movieGenre, string searchString)
+        public async Task<IActionResult> Index(string movieGenre, string searchString,CancellationToken cancellationToken)
         {
-            if (_context.Movie == null)
-            {
-                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
-            }
+                if (_context.Movie == null)
+                {
+                    return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+                }
+                
+                // Use LINQ to get list of genres.
+                IQueryable<string> genreQuery = from m in _context.Movie
+                                                orderby m.Genre
+                                                select m.Genre;
+                var movies = from m in _context.Movie
+                             select m;
 
-            // Use LINQ to get list of genres.
-            IQueryable<string> genreQuery = from m in _context.Movie
-                                            orderby m.Genre
-                                            select m.Genre;
-            var movies = from m in _context.Movie
-                         select m;
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    movies = movies.Where(s => s.Title!.Contains(searchString));
+                }
 
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                movies = movies.Where(s => s.Title!.Contains(searchString));
-            }
+                if (!string.IsNullOrEmpty(movieGenre))
+                {
+                    movies = movies.Where(x => x.Genre == movieGenre);
+                }
 
-            if (!string.IsNullOrEmpty(movieGenre))
-            {
-                movies = movies.Where(x => x.Genre == movieGenre);
-            }
+                var movieGenreVM = new MovieGenreViewModel
+                {
+                    Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                    Movies = await movies.ToListAsync()
+                };
 
-            var movieGenreVM = new MovieGenreViewModel
-            {
-                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
-                Movies = await movies.ToListAsync()
-            };
-
-            return View(movieGenreVM);
+                return View(movieGenreVM);            
         }
 
 
-        [HttpPost]//
+        [HttpPost]
         public string Index(string searchString, bool notUsed)
         {
             return "From [HttpPost]Index: filter on " + searchString;
@@ -89,7 +93,7 @@ namespace MVCSample.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid)
             {

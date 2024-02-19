@@ -12,7 +12,7 @@ namespace MVCSample.Models
         
         public SelectList? Genres { get; set; }
 
-        [Display(Name = "Select Genre : ")]
+        [Display(Name = "Genre : ")]
         public string? MovieGenre { get; set; }
         [Display(Name = "Title : ")]
         public string? SearchString { get; set; }
