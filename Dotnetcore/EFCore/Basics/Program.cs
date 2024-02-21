@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCore.Basics.LazyLoading;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreBasics
 {
@@ -9,6 +10,48 @@ namespace EFCoreBasics
         static Program()
         {
             _dbContext = new BloggingContext();
+        }
+
+        static void Main()
+        {
+            try
+            {
+                //SeedData();
+
+                //IQueryable
+                 IQueryable<Post> queryable = _dbContext.Set<Post>();
+                var queryStr = queryable.Skip(2).Take(3).ToQueryString();
+                var list2 = queryable.Skip(2).Take(3).ToList();
+
+                //IEnumerable (Enumerable'a atadıktan sonraki sorgular bellekten yürütülür. Yada tekrar AsQueryable() ile cast işlemi uygulanır.)
+                IEnumerable<Post> enumerable = _dbContext.Set<Post>().Where(post => post.PostId > 1);
+                var list = enumerable.Skip(2).Take(3).ToList();                 //Enumerable atamadan önceki sorgular (bu durumda postId>1) veritabanında yapılır.Skip ve Take bellekte yapılır. 
+                var list4 = enumerable.AsQueryable().Skip(2).Take(3).ToList(); //Skip() ve Take() veritabanında yapılır. Çünkü AsQueryable() ile sorguya dönüştürdük.
+                string str = _dbContext.Set<Post>().Skip(1).Take(3).ToQueryString();
+
+                //Lazy Loading
+                using (LazyContext context = new LazyContext())
+                {
+                    var blogList = context.Blogs.ToList();
+                    var postList = blogList[0].Posts;//Load Posts from Db at here !
+                }
+
+                //Eager Loading without proxies
+                var blogs = _dbContext.Blogs.Include(blog => blog.Posts).ToList();
+                var posts = blogs[0].Posts;
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                _dbContext.Dispose();
+            }
+
+            Console.WriteLine();
         }
 
         static void SeedData()
@@ -58,40 +101,5 @@ namespace EFCoreBasics
                 var x = dbContext.SaveChanges();
             }
         }
-        static void Main()
-        {
-            try
-            {
-                //SeedData();
-
-                //IQueryable<Post> queryable = _dbContext.Set<Post>();
-                //var list2 = queryable.Skip(2).Take(3).ToList();
-                IEnumerable<Post> enumerable = _dbContext.Set<Post>().Where(post => post.PostId > 1);
-                var list = enumerable.Skip(2).Take(3).ToList();
-                var list3 = enumerable.Where(x => x.BlogId == 3).ToList();
-                var list4 = enumerable.AsQueryable().Where(x => x.BlogId == 3).ToList();
-                string str = _dbContext.Set<Post>().Skip(1).Take(3).ToQueryString();
-               
-                //Lazy Loading
-                EFCore.Basics.LazyLoading.Test.Run();
-
-                //Eager Loading without proxies
-                var blogs = _dbContext.Blogs.Include(blog => blog.Posts).ToList();
-                var posts = blogs[0].Posts;
-
-               
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            finally
-            {
-                _dbContext.Dispose();
-            }
-
-            Console.WriteLine();
-        }
-
     }
 }

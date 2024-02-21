@@ -1,18 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFCore.Basics.LazyLoading
 {
     public class LazyPost
     {
         public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
 
         public int BlogId { get; set; }
 
-        private LazyBlog _blog;
+        private LazyBlog? _blog = default;
 
-        public LazyBlog Blog
+        public LazyBlog? Blog
         {
             get => LazyLoader.Load(this, ref _blog);
             set => _blog = value;
@@ -20,6 +21,7 @@ namespace EFCore.Basics.LazyLoading
 
         public LazyPost()
         {
+
         }
 
         private LazyPost(ILazyLoader lazyLoader)
@@ -27,7 +29,7 @@ namespace EFCore.Basics.LazyLoading
             LazyLoader = lazyLoader;
         }
 
-        private ILazyLoader LazyLoader { get; set; }
+        private ILazyLoader? LazyLoader { get; set; }
 
 
     }
