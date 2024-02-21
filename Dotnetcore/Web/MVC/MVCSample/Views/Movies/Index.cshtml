@@ -26,55 +26,143 @@
     <input type="submit" disabled="@(false)" value="Filter" />
 
 </form>
+<div>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movies![0].Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movies![0].ReleaseDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movies![0].Genre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movies![0].Rating)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movies![0].Price)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Movies!)
+                {
+                    <tr onmouseover="DetailsPreviewPopup(@item.Id)"
+                        onmouseleave="OnMouseLeave(@item.Id)">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReleaseDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Genre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rating)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a class="detailsBtn"
+                               data-id="@item.Id"
+                               onclick="DetailsPreview(event,@item.Id)" data-id="@item.Id">
+                                Preview
+                            </a>
+                            @* <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a> *@
+                        </td>
+
+                        @* <td><div id="detailsPopup_@item.Id" style="width:100px;height:100px;background-color:yellow;"></div></td> *@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div id="detailsContainer">
+    </div>
+
+    <div id="detailsPopup">
+    </div>
+</div>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].ReleaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Movies!)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
+<script>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+    const loadingContent = "<p>Loading...</p>"
+    document.addEventListener('DOMContentLoaded', function () {
+
+    });
+
+    function DetailsPreview(event,id) {
+        event.preventDefault();
+        document.getElementById('detailsContainer').innerHTML = loadingContent;
+        fetch('/Movies/Preview/' + id)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP Status Code : ' + response.status);
+                }
+                return response.text();
+            })
+            .then(data => {                
+                document.getElementById('detailsContainer').innerHTML = data;
+
+                document.body.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            })
+            .catch(error => {
+                console.error('Error : ' + error.message);
+            });
+    }
+
+    function DetailsPreviewPopup(id) {
+
+        return;//WARNING
+
+        if (id === undefined || id === null) {
+            return;
         }
-    </tbody>
-</table>
+        document.getElementById('detailsPopup_' + id).innerHTML = loadingContent;
+
+        fetch('/Movies/Preview/' + id)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP Status Code : ' + response.status);
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('detailsPopup_' + id).innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error : ', error.message);
+            });
+
+    }
+
+    function OnMouseLeave(id) {
+        return;//WARNING
+
+        if (id === undefined || id === null) {
+            return;
+        }
+
+        var popupContent = document.getElementById('detailsPopup_' + id).innerHTML;
+
+        function clearPopup() {
+            document.getElementById('detailsPopup_' + id).innerHTML = "";
+        }
+
+        clearPopup();
+    }
+</script>
