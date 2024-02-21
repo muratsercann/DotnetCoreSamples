@@ -2,10 +2,12 @@
 # Get All Todos
 GET http://localhost:5299/todos
 
-# GET http://192.168.1.24:5299/todos
+###
+
+GET http://192.168.1.24:5299/todos
 
 ### Get Todo with specified id
-GET http://localhost:5299/todos/1
+GET http://localhost:5299/todos/11
 
 
 ### Create a todo 
@@ -13,12 +15,17 @@ POST http://localhost:5299/todos
 Content-Type: application/json
 
 {
-  "id": 3,
-  "name": "Todo 3",
-  "dueDate": "2023-12-31",
-  "isCompleted": true
+  "id": 11,
+  "name": "Todo 11",
+  "dueDate": "2024-12-31",
+  "isCompleted": false
 }
 
 
 ### Delete a todo with specified id
-DELETE http://localhost:5299/todos/3
+DELETE http://localhost:5299/todos/2
+
+
+###
+
+GET http://localhost:5299/tasks/1
