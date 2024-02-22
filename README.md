@@ -32,7 +32,7 @@ I am writing code samples about some fundamental topics of **C#**, **EFCore**, *
   - Efcore (Lazy/Eager Loading, Queryable vs Enumerable),
   - Dapper (CRUD operations)
 - Minimal API with Asp .NET Core (Endpoints, Middlewares ,DI , EndpointFilter)
-- Asp .NET MVC (
+- Asp .NET MVC
   - Dependency Injection,
   - CancellationToken,
   - Logging
