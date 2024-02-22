@@ -7,7 +7,7 @@ Add this package reference into the project:
 ```
 
 ### Console Example for DI (Dependency Injection)
-This example create services for dependency Injection. And write console log about each service lifetime to see that :
+This example creates services for dependency Injection. And write console log about each service lifetime to see that :
 1. **AddTransient** 	: Always changes
 2. **AddScoped** 		: Changes only with lifetime
 3. **AddSingleton** 	: Always the same
@@ -20,7 +20,7 @@ ExemplifyServiceLifetime(host.Services, "Lifetime 1");
 ExemplifyServiceLifetime(host.Services, "Lifetime 2");
 ```
 
-This method is :
+The method is :
 
 ```csharp
 static void ExemplifyServiceLifetime(IServiceProvider hostProvider, string lifetime)
@@ -46,53 +46,6 @@ static void ExemplifyServiceLifetime(IServiceProvider hostProvider, string lifet
 ```
 
 
-Output :
-### Prerequsities
-Add this package reference into the project:
-```csharp
-<ItemGroup>
-  <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-</ItemGroup>
-```
-
-### Console Example for DI (Dependency Injection)
-This example create services for dependency Injection. And write console log about each service lifetime to see that :
-1. **AddTransient** 	: Always changes
-2. **AddScoped** 		: Changes only with lifetime
-3. **AddSingleton** 	: Always the same
-
-
-------------
-With the following code block we are creating two lifetime.
-```csharp
-ExemplifyServiceLifetime(host.Services, "Lifetime 1");
-ExemplifyServiceLifetime(host.Services, "Lifetime 2");
-```
-
-This method is :
-
-```csharp
-static void ExemplifyServiceLifetime(IServiceProvider hostProvider, string lifetime)
-{
-    using IServiceScope serviceScope = hostProvider.CreateScope();
-    IServiceProvider provider = serviceScope.ServiceProvider;
-
-    ServiceLifetimeReporter logger = provider.GetRequiredService<ServiceLifetimeReporter>();
-    logger.ReportServiceLifetimeDetails(
-        $"1. {lifetime}: Call 1 to provider.GetRequiredService<ServiceLifetimeReporter>()");
-
-    Console.WriteLine();
-
-    logger = provider.GetRequiredService<ServiceLifetimeReporter>();
-    logger.ReportServiceLifetimeDetails(
-        $"2. {lifetime}: Call 2 to provider.GetRequiredService<ServiceLifetimeReporter>()");
-
-    Console.WriteLine("".PadLeft(80,'#'));
-
-
-    Console.WriteLine();
-}
-```
 
 
 Output :
