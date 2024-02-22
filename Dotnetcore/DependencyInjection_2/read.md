@@ -46,7 +46,7 @@ static void ExemplifyServiceLifetime(IServiceProvider hostProvider, string lifet
 ```
 
 
-
+------------
 
 Output :
 
