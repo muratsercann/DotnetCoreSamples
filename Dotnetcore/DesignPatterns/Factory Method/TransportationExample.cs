@@ -15,15 +15,44 @@ namespace FactoryMethod
                 new Product { Name = "IPhone 14S", Code = "F4X7YZ8"},
                 new Product { Name = "Dell Inspiron", Code = "A9GJ7HA" }
             };
+
             Cargo cargo = new Cargo();
             cargo.Address = "34 Street 45633 Berlin";
             cargo.products.AddRange(products);
 
-            ITransportation truck = new TruckTransportationFactory().Create();
-            ITransportation ship = new ShipTransformationFactory().Create();
+            ITransportation truck =  TransportationService.CreateTransportation(
+                new TruckTransportationFactory());
 
+            ITransportation ship = TransportationService.CreateTransportation(
+                new ShipTransformationFactory()
+                );
+
+            
             truck.Deliver(cargo);
             ship.Deliver(cargo);
+
+            //or 
+
+            TransportationService.Deliver(truck, cargo);
+            TransportationService.Deliver(ship, cargo);
+        }
+    }
+
+    //Bu patterndeki interfacelerin generic bir kullanıma
+    //uygun olduğunu göstermek ve
+    //Transportation işlemlerinin farklı bir servis üzerinden yapılabildiğini
+    //simüle etmek için yazıldı.
+    //Pattern içerisinde kullanımı şart değil.
+    public static class TransportationService
+    {
+        public static void Deliver(ITransportation transportation, Cargo cargo)
+        {
+            transportation.Deliver(cargo);
+        }
+
+        public static ITransportation CreateTransportation(ITransportationFactory factory)
+        {
+            return factory.Create();
         }
     }
 
@@ -41,27 +70,27 @@ namespace FactoryMethod
 
     }
 
-    interface ITransportation
+    public interface ITransportation
     {
         void Deliver(Cargo cargo);
     }
 
-    interface ITransportationFactory
+    public interface ITransportationFactory
     {
         ITransportation Create(); 
     }
 
-    class ShipTransportation : ITransportation
+    public class ShipTransportation : ITransportation
     {
         public void Deliver(Cargo cargo) { }
     }
 
-    class TruckTransportation : ITransportation
+    public class TruckTransportation : ITransportation
     {
         public void Deliver(Cargo cargo) { }
     }
 
-    class TruckTransportationFactory : ITransportationFactory
+    public class TruckTransportationFactory : ITransportationFactory
     {
         public ITransportation Create()
         {
@@ -69,7 +98,7 @@ namespace FactoryMethod
         }
     }
 
-    class ShipTransformationFactory : ITransportationFactory
+    public class ShipTransformationFactory : ITransportationFactory
     {
         public ITransportation Create() {
             return new ShipTransportation();

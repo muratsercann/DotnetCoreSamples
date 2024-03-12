@@ -11,51 +11,50 @@ public class Program
         try
         {
             var services = new ServiceCollection();
-
-            services.AddTransient<Application_MS>();
+            services.AddSingleton<CustomService>();
             services.AddTransient<IMessageWriter, MessageWriter>();
-            // services.AddLogging(configure => configure.AddConsole());
-            services.AddLogging(configure => configure.AddEventLog());
+            services.AddLogging(configure => configure.AddConsole());
 
             IServiceProvider provider = services.BuildServiceProvider();
-            var application = provider.GetService<Application_MS>();
+            var app = provider.GetService<CustomService>();
 
-            application.Run();
+            app!.Run();
         }
         finally
         {
-            Console.WriteLine("\r\nPress any key to exit...");
             Console.ReadKey();
         }
     }
 
-    public class Application_MS
-    {
-        IMessageWriter messageWriter;
-        private readonly ILogger<Application_MS> logger;
-        public Application_MS(ILogger<Application_MS> _logger, IMessageWriter _messageWriter)
-        {
-            messageWriter = _messageWriter;
-            logger = _logger;
-
-            Console.WriteLine("public Application(IMessageWriter _messageWriter) {");
-        }
-        public bool Run()
-        {
-            messageWriter.Write("message writer in the Run method of the Application class");
-            logger.LogInformation("Hello. I'm logger ");
-            Console.WriteLine("I'm running yo!");
-            return true;
-        }
-    }
 }
 
+public class CustomService
+{
+    private readonly ILogger<CustomService> _logger;
+    private readonly IMessageWriter _messageWriter;
+
+    public CustomService(ILogger<CustomService> logger, IMessageWriter messageWriter)
+    {
+        _logger = logger;
+        _messageWriter = messageWriter;
+
+        logger.LogInformation("CustomService constructor.");
+    }
+    public bool Run()
+    {
+        _messageWriter.Write("Hello !");
+
+        _logger.LogInformation("I'm logger.");
+        _logger.LogInformation("and I'm running..");
+        return true;
+    }
+}
 
 public class MessageWriter : IMessageWriter
 {
     public void Write(string message)
     {
-        Console.WriteLine($"MessageWriter.Write(message: \"{message}\")");
+        Console.WriteLine($"\n## Message writer says: {message}\n");
     }
 }
 

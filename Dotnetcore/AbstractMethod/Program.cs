@@ -1,4 +1,6 @@
-﻿internal class Program
+﻿using System.Globalization;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
@@ -9,13 +11,24 @@
             item.Draw();
         }
 
+        foreach (var item in shapes)
+        {
+            string message = item.SayHello();
+            Console.WriteLine($"{message}");
+        }
+
         Console.ReadLine();
     }
 }
 
-public abstract class Shape
+public abstract class Shape 
 {
     public abstract void Draw();
+
+    public string SayHello()
+    {
+        return $"SayHello() in Shape type says : Hi ! My type is {this.GetType().Name}";
+    }
 }
 
 public class Triangle : Shape

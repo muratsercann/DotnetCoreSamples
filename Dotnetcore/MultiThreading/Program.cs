@@ -8,14 +8,8 @@ internal class Program
     private static readonly int loop = 30000000;
     private static async Task Main(string[] args)
     {
-        await FactorialTest.CalculateFactorials(400, 40);
-        await FactorialTest.CalculateFactorials(400, 80);
-        await FactorialTest.CalculateFactorials(400, 100);
-        await FactorialTest.CalculateFactorials(400, 200);
-        await FactorialTest.CalculateFactorials(400, 400);
-
-        //await Test_SingleThread();
-        //await Test_MultiThread();
+        await Test_SingleThread();
+        await Test_MultiThread();
 
         Console.ReadLine();
     }

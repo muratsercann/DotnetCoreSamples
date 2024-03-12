@@ -3,31 +3,36 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-       
-        unchecked
+
+        int a = int.MaxValue; // 2147483647
+        a++;// the value of a overflows and becomes -2147483648.
+        Console.WriteLine($"value of a : {a}");
+        //COMPILE TIME ERROR.
+        //int b = int.MaxValue + 1;
+
+
+        //this throws an exeption in RUNTIME.
+        checked
         {
-            int a = int.MaxValue + 1;
-            Console.WriteLine("a : " + a);
+            try
+            {
+                int c = int.MaxValue; // 2147483647
+                c++;//Throws OverflowException because of 'checked'
+
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine($"c++ -> {ex.Message}");
+            }
         }
 
-        // //Output : a : -2147483648
-        // // burda anın değeri int minumum değer olur ve hata vermeden değer taşar ve başa döner
+        unchecked
+        {
+            int d = int.MaxValue + 1;
+            Console.WriteLine($"value of d : {d}");
 
-
-        // checked
-        // {
-        //      int b = int.MaxValue + 1;    //compile time error : 
-        //
-        //      Error CS0220  The operation overflows at compile time in 
-        //      checked mode CheckedUnchecked    D:\Projects 2023\Dotnetcore\Dotnetcore\CheckedUnchecked\Program.cs  8   Active
-        //
-        //      int a = int.MaxValue;         
-        //      a++;
-        //      Console.WriteLine("a : " + a);
-        //     
-        //      //Runtime Error :
-        //      //Error : Unhandled exception. 
-        //      //System.OverflowException: Arithmetic operation resulted in an overflow.
-        // }
+            //d overflows and its value becomes -2147483648. No Error if its value overflows.
+        }
+        System.TimeSpan
     }
 }
