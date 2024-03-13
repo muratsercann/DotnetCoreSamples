@@ -10,7 +10,7 @@ public class Program
 
         // Adapted chemical compounds
 
-        Compound water = new RichCompound("Water");
+        Compound water = new RichCompound("Waters");
         water.Display();
 
         Compound benzene = new RichCompound("Benzene");
@@ -77,10 +77,10 @@ public class RichCompound : Compound
     }
 }
 
+
 /// <summary>
 /// The 'Adaptee' class
 /// </summary>
-
 public class ChemicalDatabank
 {
     // The databank 'legacy API'
