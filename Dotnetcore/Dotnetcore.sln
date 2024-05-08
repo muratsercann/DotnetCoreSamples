@@ -149,7 +149,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoForm", "NoSql\MongoDB\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.Strategy Pattern", "6.Strategy Pattern", "{1652EECE-D4E4-44F3-878D-E614CD0FCE7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadMapSample", "DesignPatterns\Strategy Pattern\RoadMapSample\RoadMapSample.csproj", "{E1A08DB9-8951-41A9-93B7-7E510F43A06F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadMapSample", "DesignPatterns\Strategy Pattern\RoadMapSample\RoadMapSample.csproj", "{E1A08DB9-8951-41A9-93B7-7E510F43A06F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsertionSort", "InsertionSort\InsertionSort.csproj", "{E256B37C-703F-4A33-B889-B5083BFED8D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -333,6 +335,10 @@ Global
 		{E1A08DB9-8951-41A9-93B7-7E510F43A06F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1A08DB9-8951-41A9-93B7-7E510F43A06F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1A08DB9-8951-41A9-93B7-7E510F43A06F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E256B37C-703F-4A33-B889-B5083BFED8D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E256B37C-703F-4A33-B889-B5083BFED8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E256B37C-703F-4A33-B889-B5083BFED8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E256B37C-703F-4A33-B889-B5083BFED8D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -404,6 +410,7 @@ Global
 		{227282CB-0A46-4C03-A27D-8F92FC01A880} = {A06F85CB-CB34-4FF7-AC5D-3561AD842348}
 		{1652EECE-D4E4-44F3-878D-E614CD0FCE7D} = {C916EB9B-AB8B-44BE-835C-672E386A333B}
 		{E1A08DB9-8951-41A9-93B7-7E510F43A06F} = {1652EECE-D4E4-44F3-878D-E614CD0FCE7D}
+		{E256B37C-703F-4A33-B889-B5083BFED8D1} = {B49614CC-4284-4906-94D8-EFE8EB59402C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0DD8E97D-3A21-4718-9612-2005E1B75CEE}
