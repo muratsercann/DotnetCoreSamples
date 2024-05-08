@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RoadMapSample.Strategies;
 
 namespace RoadMapSample
 {
@@ -24,6 +25,15 @@ namespace RoadMapSample
         {
             routeStrategy = route;
         }
+        public List<string> GetRoute()
+        {
+            return routeStrategy.GetRoute(_startPoint, _finishPoint);
+        }
+
+        public int GetTimeLength()
+        {
+            return routeStrategy.GetTimeLengthMinutes();
+        }
 
         public void WriteTravelInfo()
         {
@@ -37,6 +47,7 @@ namespace RoadMapSample
             _finishPoint.PrintCoordinate();
             Console.WriteLine($"Time Length     : {time} min");
             Console.Write("Route           : ");
+            
             foreach (var item in route)
             {
                 Console.Write($"{item} - ");
@@ -46,15 +57,7 @@ namespace RoadMapSample
             Console.WriteLine();
         }
 
-        public List<string> GetRoute()
-        {
-            return routeStrategy.GetRoute(_startPoint, _finishPoint);
-        }
 
-        public int GetTimeLength()
-        {
-            return routeStrategy.GetTimeLengthMinutes();
-        }
 
     }
 }

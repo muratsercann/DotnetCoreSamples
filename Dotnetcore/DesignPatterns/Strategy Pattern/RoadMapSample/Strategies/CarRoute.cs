@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoadMapSample
+namespace RoadMapSample.Strategies
 {
     public class CarRoute : IRoute
     {

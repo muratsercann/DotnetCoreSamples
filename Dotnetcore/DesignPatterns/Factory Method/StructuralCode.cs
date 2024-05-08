@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Program
+namespace FactoryMethod.Structural
 {
-    public class Program
+    public class StructuralCode
     {
         public static void Main()
         {
-            FactoryMethod.Program2.Main2();
+            TransportationExample.TransportationExample_Program.TransportationExample_Main();
 
             Factory[] factories = new Factory[2];
 

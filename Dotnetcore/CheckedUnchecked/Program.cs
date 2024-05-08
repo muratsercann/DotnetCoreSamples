@@ -33,6 +33,5 @@ internal class Program
 
             //d overflows and its value becomes -2147483648. No Error if its value overflows.
         }
-        System.TimeSpan
     }
 }

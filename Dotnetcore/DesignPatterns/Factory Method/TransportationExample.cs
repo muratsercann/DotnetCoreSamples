@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactoryMethod
+namespace FactoryMethod.TransportationExample
 {
-    public static class Program2
+    public static class TransportationExample_Program
     {
-        public static void Main2()
+        public static void TransportationExample_Main()
         {
             List<Product> products = new List<Product>
             {
@@ -58,16 +58,16 @@ namespace FactoryMethod
 
     public class Product
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
-        public string Code { get; set; }
+        public string Code { get; set; } = "";
     }
+
     public class Cargo {
         public DateTime Date { get; set; }
         public string Address { get; set; }
 
         public List<Product> products = new List<Product>();
-
     }
 
     public interface ITransportation
