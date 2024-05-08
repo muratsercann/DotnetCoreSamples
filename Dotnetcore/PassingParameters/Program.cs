@@ -39,7 +39,7 @@ namespace Dotnetcore
                         // Çünkü; passingRefOut çalıştırıldığında "out" keywordu ile parametre geçildiğinde
                         // içerde bir değer verilmesi zorunlu ve b nin burda verilen değeri aslında bir işe yaramaz.
             int c = 30;
-            passingRefOut(ref a, out b, c);
+            passingRefOut(ref a, out b, in c);
             Console.WriteLine($"a : {a}");
             Console.WriteLine($"b : {b}");
             Console.WriteLine($"c : {c}");

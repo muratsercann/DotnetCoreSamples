@@ -56,3 +56,11 @@ public class CustomType
     public static explicit operator int(CustomType sample) => sample.Value;
     public static implicit operator long(CustomType sample) => sample.Value;
 }
+
+/*
+ 
+4. Things to Remember:
+The is keyword returns <false> if the object is <null>, regardless of the target type.
+When using is with value types, *boxing* occurs. For performance-critical code, be aware of this.
+
+*/

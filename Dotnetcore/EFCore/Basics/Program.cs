@@ -16,14 +16,15 @@ namespace EFCoreBasics
         {
             try
             {
-                //SeedData();
+                SeedData();
 
                 //IQueryable
                  IQueryable<Post> queryable = _dbContext.Set<Post>();
                 var queryStr = queryable.Skip(2).Take(3).ToQueryString();
                 var list2 = queryable.Skip(2).Take(3).ToList();
 
-                //IEnumerable (Enumerable'a atadıktan sonraki sorgular bellekten yürütülür. Yada tekrar AsQueryable() ile cast işlemi uygulanır.)
+                //IEnumerable (Enumerable'a atadıktan sonraki sorgular bellekten yürütülür.
+                //Yada tekrar AsQueryable() ile cast işlemi uygulanır.)
                 IEnumerable<Post> enumerable = _dbContext.Set<Post>().Where(post => post.PostId > 1);
                 var list = enumerable.Skip(2).Take(3).ToList();                 //Enumerable atamadan önceki sorgular (bu durumda postId>1) veritabanında yapılır.Skip ve Take bellekte yapılır. 
                 var list4 = enumerable.AsQueryable().Skip(2).Take(3).ToList(); //Skip() ve Take() veritabanında yapılır. Çünkü AsQueryable() ile sorguya dönüştürdük.
