@@ -2,15 +2,15 @@
 {
     private static void Main(string[] args)
     {
-        var arr = new int[]{ 5, 2, 1, 6, 4, 8, 2,3,10,50,18,12,1,59,56,-5,74,48};
+        var arr = new int[] { 5, 2, 1, 6, 4, 8, 2, 3, 10, 50, 18, 12, 1, 59, 56, -5, 74, 48, 0, 18 };
 
-        Console.Write("Unsorted Array :");
+        Console.WriteLine("Unsorted Array :");
         writeArray(arr);
         Sort(arr);
-        Console.Write("Sorted Array :");
+        Console.WriteLine("\nSorted Array :");
         writeArray(arr);
 
-        Console.ReadLine();
+        Console.ReadLine();       
     }
 
     private static void writeArray(int[] arr)
@@ -27,33 +27,26 @@
     {
         for (int i = 1; i < arr.Length; i++)
         {
-            int X = arr[i];
-            int lastSkipped = i;
-            
-            for (int j = i - 1 ; j >= 0; j--)
+            int currentValue = arr[i];
+            int emptyIndex = i;
+
+            for (int j = i - 1; j >= 0; j--)
             {
-                if (X < arr[j])
+                if (currentValue < arr[j])
                 {
-                    arr[j+1] = arr[j];
-                    lastSkipped = j;
+                    MoveToRight(arr, j);
+                    emptyIndex = j;
                 }
                 else
-                {                    
                     break;
-                }
             }
-
-            arr[lastSkipped] = X;
-
-
+            arr[emptyIndex] = currentValue;
         }
         return arr;
     }
 
-    public static void Swap(int[] arr, int index1, int index2)
+    public static void MoveToRight(int[] arr, int index)
     {
-        int temp = arr[index1];
-        arr[index1] = arr[index2];
-        arr[index2] = temp;
+        arr[index + 1] = arr[index];
     }
 }
