@@ -8,8 +8,8 @@ internal class Program
     {
         var random = new Random();
 
-        var numbers1 = Enumerable.Range(1, 1000000).OrderBy(x => random.Next()).Take(1000000).ToArray();
-
+        //var numbers1 = Enumerable.Range(1, 1000000).OrderBy(x => random.Next()).Take(1000000).ToArray();
+        var numbers1 = new int[]{ 2,5,1,6,4};
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
         Sort(numbers1, 0, numbers1.Length - 1);
