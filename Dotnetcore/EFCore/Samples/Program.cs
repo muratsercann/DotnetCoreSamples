@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCore.Samples;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Diagnostics;
 
 namespace EFCoreSamples
 {
@@ -11,71 +14,155 @@ namespace EFCoreSamples
             _dbContext = new BloggingContext();
         }
 
-        static void Main()
+        static async Task Main()
         {
-            try
-            {
-                SeedData();              
+            char input;
+            bool validInput = false;
 
-            }
-            catch (Exception ex)
+            while (!validInput)
             {
-                Console.WriteLine(ex.ToString());
-            }
-            finally
-            {
-                _dbContext.Dispose();
+                Console.WriteLine("Enter a character ('r' for read, 'w' for write): ");
+                input = Console.ReadKey().KeyChar;
+                Console.WriteLine(); // Move to the next line
+
+                switch (input)
+                {
+                    case 'r':
+                        Console.WriteLine("You chose 'r' - Read operation.");
+                        //validInput = true;
+                        await Write();
+                        var blogs = await ReadAllBlogs();
+                        Console.WriteLine($"Blogs readed count : {blogs.Count}");
+                        break;
+                    case 'w':
+                        Console.WriteLine("You chose 'w' - Write operation.");
+                        //validInput = true;
+                        await Test_TransactionIsolationSerializable();
+
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Invalid input. Please enter 'r' or 'w'.");
+                        break;
+                }
             }
 
-            Console.WriteLine();
+            Console.ReadLine();
         }
 
-        static void SeedData()
+        private async static Task<List<Blog>> GenerateDummyData(int count)
         {
-            using (BloggingContext dbContext = new BloggingContext())
+            var blogs = new List<Blog>();
+            var random = new Random();
+
+            for (int i = 1; i <= count; i++)
             {
-                if (dbContext.Blogs.Any())
+                var blog = new Blog
                 {
-                    return;
-                }
-                List<Blog> blogs = new List<Blog> {
-                new Blog {
-                    Url = "Url1",
-                    Rating = 5,
-                    Title = "My coding life 1",
+                    Title = $"Blog {i}",
+                    Url = $"http://example.com/blog{i}",
+                    Rating = random.Next(1, 6), // Random rating between 1 and 5
                     Posts = new List<Post>
                     {
-                        new Post(){BlogId = 1,Content = "Post 11 content..", Title = "Post 11" },
-                        new Post(){BlogId = 1,Content = "Post 12 content..", Title = "Post 12" },
-                        new Post(){BlogId = 1,Content = "Post 13 content..", Title = "Post 13" },
-                        new Post(){BlogId = 1,Content = "Post 14 content..", Title = "Post 14" },
-                    },
-
-                },
-                new Blog {
-                    Url = "Url2",
-                    Rating = 4,
-                    Title = "My coding life 2",
-                    Posts = new List<Post>
-                    {
-                        new Post(){BlogId = 2,Content = "Post 21 content..", Title = "Post 21" },
-                        new Post(){BlogId = 2,Content = "Post 22 content..", Title = "Post 22" },
-                        new Post(){BlogId = 2,Content = "Post 23 content..", Title = "Post 23" },
-                        new Post(){BlogId = 2,Content = "Post 24 content..", Title = "Post 24" },
-                    },
-
-                }
-
+                        new Post
+                        {
+                            Title = $"Post 1 for Blog {i}",
+                            Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                        },
+                        new Post
+                        {
+                            Title = $"Post 2 for Blog {i}",
+                            Content = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                        }
+                    }
                 };
 
-                foreach (var item in blogs)
+                //blogs.Add(blog);
+                _dbContext.Blogs.Add(blog);
+                Console.Clear();
+                Console.WriteLine($"{i} blogs created..");
+                await _dbContext.SaveChangesAsync();
+            }
+
+            //foreach (var blog in blogs)
+            //{
+            //    _dbContext.Blogs.Add(blog);
+            //}
+
+            //await _dbContext.SaveChangesAsync();
+
+            return blogs;
+        }
+
+        private async static Task Test_TransactionIsolationSerializable()
+        {
+            using (var context = new BloggingContext())
+            {
+                using (var transaction = await context.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable))
                 {
-                    dbContext.Blogs.Add(item);
+                    //var blog = await context.Blogs.Take(1).FirstAsync();
+                    //blog.Url = "url_" + Random.Shared.Next(0, int.MaxValue).ToString();
+                    var num = Random.Shared.Next(0, int.MaxValue).ToString();
+                    var blog = new Blog
+                    {
+                        Title = "Blog_" + num.ToString(),
+                        Url = "Url_" + num.ToString(),
+                        Rating = 1,
+                    };
+                    context.Blogs.Add(blog);
+
+                    await Task.Delay(5000);
+
+                    await context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+
+                    Console.WriteLine($"a new Blog added, BlogId : {blog.BlogId}");
+                }
+            }
+        }
+
+        private async static Task Write()
+        {
+            using (var context = new BloggingContext())
+            {
+                using (var transaction = await context.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable))
+                {
+                    //var blog = await context.Blogs.Take(1).FirstAsync();
+                    //blog.Url = "url_" + Random.Shared.Next(0, int.MaxValue).ToString();
+                    var num = Random.Shared.Next(0, int.MaxValue).ToString();
+                    var blog = new Blog
+                    {
+                        Title = "Blog_" + num.ToString(),
+                        Url = "Url_" + num.ToString(),
+                        Rating = 1,
+                    };
+                    context.Blogs.Add(blog);
+
+                    //await Task.Delay(5000);
+
+                    await context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+
+                    Console.WriteLine($"a new Blog added, BlogId : {blog.BlogId}");
+                }
+            }
+        }
+        private async static Task<List<Blog>> ReadAllBlogs()
+        {
+
+            using (var context = new BloggingContext())
+            {
+                using (var transaction = await context.Database.BeginTransactionAsync())
+                {
+                    return await context.Blogs.ToListAsync();
 
                 }
-
-                var x = dbContext.SaveChanges();
             }
+        }
+
+        ~Program()
+        {
+            _dbContext.Dispose();
         }
     }
 }

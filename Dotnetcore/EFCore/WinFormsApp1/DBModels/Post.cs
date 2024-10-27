@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-namespace EFCoreSamples
+namespace WinFormsApp1
 {
     public class Post
     {
         public int PostId { get; set; }
-        public int BlogId { get; set; } = default;
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
+
+        public int BlogId { get; set; } = default;
+        public Blog? Blog { get; set; } = default;
     }
 }

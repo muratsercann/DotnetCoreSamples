@@ -155,6 +155,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsertionSort", "InsertionS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.Samples", "EFCore\Samples\EFCore.Samples.csproj", "{3C2ED81A-268E-459B-9C90-5F5302C62866}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApp1", "EFCore\WinFormsApp1\WinFormsApp1.csproj", "{C9F451CA-5769-469C-AA2E-8CF7AC4F08E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -345,6 +347,10 @@ Global
 		{3C2ED81A-268E-459B-9C90-5F5302C62866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C2ED81A-268E-459B-9C90-5F5302C62866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C2ED81A-268E-459B-9C90-5F5302C62866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9F451CA-5769-469C-AA2E-8CF7AC4F08E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9F451CA-5769-469C-AA2E-8CF7AC4F08E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9F451CA-5769-469C-AA2E-8CF7AC4F08E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9F451CA-5769-469C-AA2E-8CF7AC4F08E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -418,6 +424,7 @@ Global
 		{E1A08DB9-8951-41A9-93B7-7E510F43A06F} = {1652EECE-D4E4-44F3-878D-E614CD0FCE7D}
 		{E256B37C-703F-4A33-B889-B5083BFED8D1} = {B49614CC-4284-4906-94D8-EFE8EB59402C}
 		{3C2ED81A-268E-459B-9C90-5F5302C62866} = {A89359B1-1A04-4892-90F5-C6462F2363AC}
+		{C9F451CA-5769-469C-AA2E-8CF7AC4F08E0} = {A89359B1-1A04-4892-90F5-C6462F2363AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0DD8E97D-3A21-4718-9612-2005E1B75CEE}
